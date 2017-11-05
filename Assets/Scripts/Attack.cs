@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour {
 	
-	public bool isPistol;
-	public bool isSword;
+	public bool IsPistol;
+	public bool IsSword;
+	
+	public string Name;
+	
+	public GameObject Bullet;
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MovementScript : MonoBehaviour 
 {
+	public enum Direction {Left, Right};
+	
 	private const string PLATFORMLAYER = "Platform";
 	
 	public float movementSpeed;
@@ -25,6 +27,8 @@ public class MovementScript : MonoBehaviour
 	
 	private Rigidbody2D rigidbody;
 	private BoxCollider2D PlayerCollider;
+	
+	public Direction currentlyFacing;
 	
 	void Start () 
 	{
@@ -68,11 +72,13 @@ public class MovementScript : MonoBehaviour
 		if(Input.GetKey(keyRight))
 		{
 			rigidbody.velocity = new Vector2(movementSpeed, rigidbody.velocity.y);
+			currentlyFacing = Direction.Right;
 		}
 		
 		if(Input.GetKey(keyLeft))
 		{
 			rigidbody.velocity = new Vector2(-movementSpeed, rigidbody.velocity.y);
+			currentlyFacing = Direction.Left;
 		}
 		
 		if(Input.GetKeyDown(keyUp) && grounded)
