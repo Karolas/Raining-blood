@@ -273,6 +273,16 @@ Prefab:
       propertyPath: KeyAction1
       value: 102
       objectReference: {fileID: 0}
+    - target: {fileID: 114308223027945162, guid: 2bd40a7a1037e8742ba9611e900f86e5,
+        type: 2}
+      propertyPath: KeyHit
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 114308223027945162, guid: 2bd40a7a1037e8742ba9611e900f86e5,
+        type: 2}
+      propertyPath: KeyAction2
+      value: 104
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2bd40a7a1037e8742ba9611e900f86e5, type: 2}
   m_IsPrefabParent: 0
@@ -813,6 +823,16 @@ Prefab:
       propertyPath: KeyAction1
       value: 256
       objectReference: {fileID: 0}
+    - target: {fileID: 114308223027945162, guid: 2bd40a7a1037e8742ba9611e900f86e5,
+        type: 2}
+      propertyPath: KeyHit
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 114308223027945162, guid: 2bd40a7a1037e8742ba9611e900f86e5,
+        type: 2}
+      propertyPath: KeyAction2
+      value: 259
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2bd40a7a1037e8742ba9611e900f86e5, type: 2}
   m_IsPrefabParent: 0
@@ -1086,4 +1106,7 @@ MonoBehaviour:
   IsPistol: 1
   IsSword: 0
   Name: Pistol
+  Durability: 30
+  RespawnTime: 15
   Bullet: {fileID: 1542923610044684, guid: 22d24d0ea9007e8489ead265048cbfb9, type: 2}
+  available: 1

@@ -11,5 +11,9 @@ public class BulletCollisionController : MonoBehaviour {
 			Destroy(col.gameObject);
 			Destroy(gameObject);
 		}
+		if(col.gameObject.tag == "Floor")
+		{
+			Destroy(gameObject);
+		}
 	}
 }
