@@ -25,7 +25,7 @@ public class Attack : MonoBehaviour {
 			GetComponent<SpriteRenderer>().enabled = false;
 			StartCoroutine(EnableGun());
 			return gameObject;
-		}
+		} 
 		else
 		{
 			return null;

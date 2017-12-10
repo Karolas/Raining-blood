@@ -8,6 +8,8 @@ public class MovementScript : MonoBehaviour
 	
 	private const string PLATFORMLAYER = "Platform";
 	
+	public bool isEnabled = true;
+	
 	public float movementSpeed;
 	public float jumpHeight;
 	public bool canDoublejump;
@@ -64,38 +66,41 @@ public class MovementScript : MonoBehaviour
 	
 	void Update () 
 	{	
-		if(grounded)
+		if(isEnabled)
 		{
-			doublejumped = false;
-		}
-		
-		if(Input.GetKey(keyRight))
-		{
-			rigidbody.velocity = new Vector2(movementSpeed, rigidbody.velocity.y);
-			currentlyFacing = Direction.Right;
-		}
-		
-		if(Input.GetKey(keyLeft))
-		{
-			rigidbody.velocity = new Vector2(-movementSpeed, rigidbody.velocity.y);
-			currentlyFacing = Direction.Left;
-		}
-		
-		if(Input.GetKeyDown(keyUp) && grounded)
-		{
-			rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpHeight);
-		}
-		
-		if(Input.GetKeyDown(keyUp) && !grounded && !doublejumped && canDoublejump)
-		{
-			rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpHeight);
-			doublejumped = true;
-		}
-		
-		if(Input.GetKeyDown(keyDown))
-		{
-			Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(PLATFORMLAYER));
-			ignoringPlatforms = true;
+			if(grounded)
+			{
+				doublejumped = false;
+			}
+			
+			if(Input.GetKey(keyRight))
+			{
+				rigidbody.velocity = new Vector2(movementSpeed, rigidbody.velocity.y);
+				currentlyFacing = Direction.Right;
+			}
+			
+			if(Input.GetKey(keyLeft))
+			{
+				rigidbody.velocity = new Vector2(-movementSpeed, rigidbody.velocity.y);
+				currentlyFacing = Direction.Left;
+			}
+			
+			if(Input.GetKeyDown(keyUp) && grounded)
+			{
+				rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpHeight);
+			}
+			
+			if(Input.GetKeyDown(keyUp) && !grounded && !doublejumped && canDoublejump)
+			{
+				rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpHeight);
+				doublejumped = true;
+			}
+			
+			if(Input.GetKeyDown(keyDown))
+			{
+				Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(PLATFORMLAYER));
+				ignoringPlatforms = true;
+			}
 		}
 	}
 }

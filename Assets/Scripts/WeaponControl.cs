@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class WeaponControl : MonoBehaviour {
 
+	private const float SWORDRAD = 5.0f;
+	
+	public bool isEnabled = true;
+
 	public bool CanUseGuns;
 	public bool CanUseMeleeWeapons;
 	
@@ -16,30 +20,51 @@ public class WeaponControl : MonoBehaviour {
 	
 	private Transform playerPos;
 	private MovementScript playerMov;
+	private BoxCollider2D playerCol;
+	private PlayerStateController playerState;
 
 	// Use this for initialization
 	void Start () {
 		playerPos = GetComponent<Transform>();
 		playerMov = GetComponent<MovementScript>();
+		playerCol = GetComponent<BoxCollider2D>();
+		playerState = GetComponent<PlayerStateController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyHit) && Weapon != null)
+		if(isEnabled)
 		{
-			Attack();
+			if(Input.GetKeyDown(KeyHit) && Weapon != null)
+			{
+				Attack();
+			}
 		}
+		
 	}
 	
 	void OnTriggerStay2D(Collider2D col) {
-        if(col.gameObject.tag == "Gun" && CanUseGuns && Input.GetKeyDown(KeyAction2))
+		if(isEnabled)
 		{
-			Attack attackScriptTemp = col.gameObject.GetComponent<Attack>();
-			if(attackScriptTemp.available)
+			if(col.gameObject.tag == "Gun" && CanUseGuns && Input.GetKeyDown(KeyAction2))
 			{
-				Weapon = attackScriptTemp.TakeGun();
-				AttackScript = attackScriptTemp;
-				Durability = AttackScript.Durability;
+				Attack attackScriptTemp = col.gameObject.GetComponent<Attack>();
+				if(attackScriptTemp.available)
+				{
+					Weapon = attackScriptTemp.TakeGun();
+					AttackScript = attackScriptTemp;
+					Durability = AttackScript.Durability;
+				}
+			}
+			if(col.gameObject.tag == "Sword" && CanUseMeleeWeapons && Input.GetKeyDown(KeyAction2))
+			{
+				Attack attackScriptTemp = col.gameObject.GetComponent<Attack>();
+				if(attackScriptTemp.available)
+				{
+					Weapon = attackScriptTemp.TakeGun();
+					AttackScript = attackScriptTemp;
+					Durability = AttackScript.Durability;
+				}
 			}
 		}
     }
@@ -65,6 +90,32 @@ public class WeaponControl : MonoBehaviour {
 			{
 				Weapon = null;
 				AttackScript = null;
+			}
+		}
+		else if(AttackScript.Name == "Sword")
+		{
+			bool playerDamaged = false;
+			Collider2D[] collidingPlayers = Physics2D.OverlapCircleAll(playerCol.bounds.center, SWORDRAD, LayerMask.GetMask("Player1", "Player2", "Player3", "Player4"));
+			foreach(Collider2D enemyCollider in collidingPlayers) {
+				if(playerMov.currentlyFacing == MovementScript.Direction.Left && enemyCollider.bounds.center.x < playerCol.bounds.center.x){
+					Debug.Log("Attack to left");
+					enemyCollider.gameObject.GetComponent<PlayerStateController>().KillPlayer();
+					playerDamaged = true;
+				}
+				else if(playerMov.currentlyFacing == MovementScript.Direction.Right && enemyCollider.bounds.center.x > playerCol.bounds.center.x) {
+					Debug.Log("Attack to right");
+					enemyCollider.gameObject.GetComponent<PlayerStateController>().KillPlayer();
+					playerDamaged = true;
+				}
+			}
+			if(playerDamaged)
+			{
+				Durability--;
+				if(Durability == 0)
+				{
+					Weapon = null;
+					AttackScript = null;
+				}
 			}
 		}
 	}
