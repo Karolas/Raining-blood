@@ -3,40 +3,67 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStateController : MonoBehaviour {
+	public enum PlayerClass {BasicGuy, Knight};
 
-	public bool IsAlive = true;
+	public PlayerClass playerClass;
+	
+	public bool IsAlive
+	{
+		get 
+		{ 
+			if(playerClass == PlayerClass.Knight)
+			{
+				return knightController.IsAlive; 
+			}
+			else
+			{
+				return basicGuyController.IsAlive; 
+			}
+		}
+		set 
+		{ 
+			if(playerClass == PlayerClass.Knight)
+			{
+				knightController.IsAlive = value; 
+			}
+			else
+			{
+				basicGuyController.IsAlive = value; 
+			}
+		}
+	}
 	public float RespawnTime;
 	
 	private ParticleSystem deathParticles;
 	private MovementScript playerMov;
 	private WeaponControl playerWeapon;
 	private SpriteRenderer playerSprite;
+	private Transform playerTransform;
+	private KnightStateController knightController;
+	private BasicGuyStateController basicGuyController;
 	
 	void Start() {
 		deathParticles = GetComponent<ParticleSystem>();
 		playerMov = GetComponent<MovementScript>();
 		playerWeapon = GetComponent<WeaponControl>();
 		playerSprite = GetComponent<SpriteRenderer>();
-	}
-	
-	public void KillPlayer() {
-		if(IsAlive) {
-			deathParticles.Play();
-			IsAlive = false;
-			playerMov.isEnabled = false;
-			playerWeapon.isEnabled = false;
-			playerSprite.enabled = false;
-			StartCoroutine(Respawn());
+		playerTransform = GetComponent<Transform>();
+		if(playerClass == PlayerClass.Knight)
+		{
+			knightController = GetComponent<KnightStateController>();
+		}
+		if(playerClass == PlayerClass.BasicGuy)
+		{
+			basicGuyController = GetComponent<BasicGuyStateController>();
 		}
 	}
 	
-	IEnumerator Respawn()
-	{
-		Debug.Log("Respawn started");
-		yield return new WaitForSeconds(RespawnTime);
-		IsAlive = true;
-		playerMov.isEnabled = true;
-		playerWeapon.isEnabled = true;
-		playerSprite.enabled = true;
+	public void KillPlayer() {
+		if(playerClass == PlayerClass.Knight) {
+			knightController.KillPlayer();
+		}
+		if(playerClass == PlayerClass.BasicGuy) {
+			basicGuyController.KillPlayer();
+		}
 	}
 }

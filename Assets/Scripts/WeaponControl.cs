@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponControl : MonoBehaviour {
 
-	private const float SWORDRAD = 5.0f;
+	private const float SWORDRAD = 1.0f;
 	
 	public bool isEnabled = true;
 
@@ -22,6 +22,9 @@ public class WeaponControl : MonoBehaviour {
 	private MovementScript playerMov;
 	private BoxCollider2D playerCol;
 	private PlayerStateController playerState;
+	private Animator animator;
+	
+	private Collider2D colWeaponSpawn;
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +32,7 @@ public class WeaponControl : MonoBehaviour {
 		playerMov = GetComponent<MovementScript>();
 		playerCol = GetComponent<BoxCollider2D>();
 		playerState = GetComponent<PlayerStateController>();
+		animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -39,33 +43,53 @@ public class WeaponControl : MonoBehaviour {
 			{
 				Attack();
 			}
+			if(colWeaponSpawn != null && colWeaponSpawn.gameObject.tag == "Gun" && CanUseGuns && Input.GetKeyDown(KeyAction2))
+			{
+				Attack attackScriptTemp = colWeaponSpawn.gameObject.GetComponent<Attack>();
+				if(attackScriptTemp.available)
+				{
+					Weapon = attackScriptTemp.TakeGun();
+					AttackScript = attackScriptTemp;
+					Durability = AttackScript.Durability;
+				}
+			}
+			if(colWeaponSpawn != null && colWeaponSpawn.gameObject.tag == "Sword" && CanUseMeleeWeapons && Input.GetKeyDown(KeyAction2))
+			{
+				Attack attackScriptTemp = colWeaponSpawn.gameObject.GetComponent<Attack>();
+				if(attackScriptTemp.available)
+				{
+					Weapon = attackScriptTemp.TakeGun();
+					AttackScript = attackScriptTemp;
+					Durability = AttackScript.Durability;
+					animator.SetBool("IsSwordTaken", true);
+				}
+			}
 		}
 		
 	}
 	
-	void OnTriggerStay2D(Collider2D col) {
+	void OnTriggerEnter2D(Collider2D col) {
 		if(isEnabled)
 		{
-			if(col.gameObject.tag == "Gun" && CanUseGuns && Input.GetKeyDown(KeyAction2))
+			if(col.gameObject.tag == "Gun")
 			{
-				Attack attackScriptTemp = col.gameObject.GetComponent<Attack>();
-				if(attackScriptTemp.available)
-				{
-					Weapon = attackScriptTemp.TakeGun();
-					AttackScript = attackScriptTemp;
-					Durability = AttackScript.Durability;
-				}
+				colWeaponSpawn = col;
 			}
-			if(col.gameObject.tag == "Sword" && CanUseMeleeWeapons && Input.GetKeyDown(KeyAction2))
+			if(col.gameObject.tag == "Sword")
 			{
-				Attack attackScriptTemp = col.gameObject.GetComponent<Attack>();
-				if(attackScriptTemp.available)
-				{
-					Weapon = attackScriptTemp.TakeGun();
-					AttackScript = attackScriptTemp;
-					Durability = AttackScript.Durability;
-				}
+				colWeaponSpawn = col;
 			}
+		}
+    }
+	
+	void OnTriggerExit2D(Collider2D col) {
+		if(colWeaponSpawn != null && colWeaponSpawn.gameObject.tag == "Gun")
+		{
+			colWeaponSpawn = null;
+		}
+		if(colWeaponSpawn != null && colWeaponSpawn.gameObject.tag == "Sword")
+		{
+			colWeaponSpawn = null;
 		}
     }
 	
@@ -94,6 +118,7 @@ public class WeaponControl : MonoBehaviour {
 		}
 		else if(AttackScript.Name == "Sword")
 		{
+			animator.SetTrigger("Attack");
 			bool playerDamaged = false;
 			Collider2D[] collidingPlayers = Physics2D.OverlapCircleAll(playerCol.bounds.center, SWORDRAD, LayerMask.GetMask("Player1", "Player2", "Player3", "Player4"));
 			foreach(Collider2D enemyCollider in collidingPlayers) {
@@ -115,8 +140,16 @@ public class WeaponControl : MonoBehaviour {
 				{
 					Weapon = null;
 					AttackScript = null;
+					animator.SetBool("IsSwordTaken", false);
 				}
 			}
 		}
+	}
+	
+	public void DestroyWeapon() 
+	{
+		Durability = 0;
+		Weapon = null;
+		AttackScript = null;
 	}
 }

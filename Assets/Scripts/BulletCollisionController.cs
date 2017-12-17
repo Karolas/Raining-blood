@@ -8,9 +8,9 @@ public class BulletCollisionController : MonoBehaviour {
 	{
 		if(col.gameObject.tag == "Player")
 		{
-			col.gameObject.GetComponent<PlayerStateController>().KillPlayer();
-			//Destroy(col.gameObject);
-			Destroy(gameObject);
+			PlayerStateController playerState = col.gameObject.GetComponent<PlayerStateController>();
+			if(playerState.IsAlive) Destroy(gameObject);
+			playerState.KillPlayer();
 		}
 		if(col.gameObject.tag == "Floor")
 		{

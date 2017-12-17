@@ -29,6 +29,8 @@ public class MovementScript : MonoBehaviour
 	
 	private Rigidbody2D rigidbody;
 	private BoxCollider2D PlayerCollider;
+	private Animator animator;
+	private Transform playerTransform;
 	
 	public Direction currentlyFacing;
 	
@@ -36,6 +38,8 @@ public class MovementScript : MonoBehaviour
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		PlayerCollider = GetComponent<BoxCollider2D>();
+		animator = GetComponent<Animator>();
+		playerTransform = GetComponent<Transform>();
 	}
 	
 	void FixedUpdate()
@@ -73,6 +77,8 @@ public class MovementScript : MonoBehaviour
 				doublejumped = false;
 			}
 			
+			rigidbody.velocity = new Vector2(0.0f, rigidbody.velocity.y);
+			
 			if(Input.GetKey(keyRight))
 			{
 				rigidbody.velocity = new Vector2(movementSpeed, rigidbody.velocity.y);
@@ -88,12 +94,14 @@ public class MovementScript : MonoBehaviour
 			if(Input.GetKeyDown(keyUp) && grounded)
 			{
 				rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpHeight);
+				animator.SetTrigger("Jump");
 			}
 			
 			if(Input.GetKeyDown(keyUp) && !grounded && !doublejumped && canDoublejump)
 			{
 				rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpHeight);
 				doublejumped = true;
+				animator.SetTrigger("Jump");
 			}
 			
 			if(Input.GetKeyDown(keyDown))
@@ -101,6 +109,28 @@ public class MovementScript : MonoBehaviour
 				Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(PLATFORMLAYER));
 				ignoringPlatforms = true;
 			}
+			
+			SetAnimations();
+		}
+	}
+	
+	void SetAnimations() 
+	{
+		animator.SetFloat("Speed", rigidbody.velocity.x);
+		if(grounded && rigidbody.velocity.y == 0) 
+		{
+			animator.SetBool("IsGrounded", true);
+		}
+		else {
+			animator.SetBool("IsGrounded", false);
+		}
+		if(rigidbody.velocity.x > 0)
+		{
+			playerTransform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+		}
+		else if(rigidbody.velocity.x < 0)
+		{
+			playerTransform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 		}
 	}
 }

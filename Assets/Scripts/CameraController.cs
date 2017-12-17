@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
+	public float arenaSize;
+
 	private Vector3 botLeft = new Vector3(0.0f, 0.0f, -10.0f);
 	private Vector3 topRight = new Vector3(0.0f, 0.0f, -10.0f);
 	
@@ -46,12 +48,15 @@ public class CameraController : MonoBehaviour {
 		
 		cameraTransform.position = middlePoint;
 		
-		float cameraSizeY = (maxY - minY) / 2;
+		float cameraSizeY = (maxY - minY) / 2 + 2;
 		float cameraSizeX = (maxX - minX) / camera.aspect;
 		Debug.Log("aspect:" + camera.aspect);
 		
-		if(cameraSizeY > 5.0f || cameraSizeX > 5.0f) {
+		if((cameraSizeY > 5.0f || cameraSizeX > 5.0f) && cameraSizeY < arenaSize && cameraSizeX < arenaSize) {
 			camera.orthographicSize = Mathf.Max(cameraSizeY, cameraSizeX);
+		}
+		else if(cameraSizeY > arenaSize || cameraSizeX > arenaSize) {
+			camera.orthographicSize = arenaSize;
 		}
 		else{
 			camera.orthographicSize = 5.0f;
