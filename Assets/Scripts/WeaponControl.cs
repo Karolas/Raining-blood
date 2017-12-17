@@ -100,12 +100,12 @@ public class WeaponControl : MonoBehaviour {
 			GameObject bullet;
 			if(playerMov.currentlyFacing == MovementScript.Direction.Right)
 			{
-				bullet = Instantiate(AttackScript.Bullet, playerPos.position + new Vector3(1.0f, 0.0f, 0.0f), Quaternion.Euler(0, 0, 0));
+				bullet = Instantiate(AttackScript.Bullet, playerPos.position + new Vector3(1.0f, 0.0f, 0.0f), Quaternion.Euler(0, 0, 0)) as GameObject;
 				bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
 			}
 			else
 			{
-				bullet = Instantiate(AttackScript.Bullet, playerPos.position + new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.Euler(0, 180, 0));
+				bullet = Instantiate(AttackScript.Bullet, playerPos.position + new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
 				bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-20, 0);
 			}
 			
