@@ -12,21 +12,27 @@ public class GameInitializationControll : MonoBehaviour {
 	void Start () {
 		RespawnPoints.AddRange(GameObject.FindGameObjectsWithTag("Respawn"));
 		
-		InitializePlayer(KeyCode.I, KeyCode.K, KeyCode.J, KeyCode.L,
-						 KeyCode.B, KeyCode.N, KeyCode.M,
-						 LayerMask.NameToLayer("Player1"), PlayerStateController.PlayerClass.BasicGuy);
+		if(GameOptions.player1 != PlayerStateController.PlayerClass.None)
+		{
+			InitializePlayer("Player1 up", "Player1 down", "Player1 left", "Player1 right",
+						 "Player1 hit", "Player1 action1", "Player1 action2",
+						 LayerMask.NameToLayer("Player1"), GameOptions.player1);
+		}
+		
+		if(GameOptions.player2 != PlayerStateController.PlayerClass.None)
+		{
+			InitializePlayer("Player2 up", "Player2 down", "Player2 left", "Player2 right",
+						 "Player2 hit", "Player2 action1", "Player2 action2",
+						 LayerMask.NameToLayer("Player2"), GameOptions.player2);
+		}
 						 
-		InitializePlayer(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D,
-						 KeyCode.F, KeyCode.G, KeyCode.H,
-						 LayerMask.NameToLayer("Player2"), PlayerStateController.PlayerClass.Knight);
-						 
-		InitializePlayer(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow,
-						 KeyCode.Keypad0, KeyCode.Keypad2, KeyCode.Keypad3,
-						 LayerMask.NameToLayer("Player3"), PlayerStateController.PlayerClass.BasicGuy);
+		//InitializePlayer(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow,
+		//				 KeyCode.Keypad0, KeyCode.Keypad2, KeyCode.Keypad3,
+		//				 LayerMask.NameToLayer("Player3"), PlayerStateController.PlayerClass.BasicGuy);
 	}
 	
-	void InitializePlayer(KeyCode keyUp, KeyCode keyDown, KeyCode keyLeft, KeyCode keyRight,
-							KeyCode keyHit, KeyCode keyAction1, KeyCode keyAction2,
+	void InitializePlayer(string keyUp, string keyDown, string keyLeft, string keyRight,
+							string keyHit, string keyAction1, string keyAction2,
 							int playerLayer, PlayerStateController.PlayerClass playerClass)
 	{
 		GameObject player = null; 

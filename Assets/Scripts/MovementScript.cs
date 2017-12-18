@@ -23,10 +23,10 @@ public class MovementScript : MonoBehaviour
 	private bool grounded = false;
 	private bool ignoringPlatforms = false;
 	
-	public KeyCode keyUp;
-	public KeyCode keyDown;
-	public KeyCode keyLeft;
-	public KeyCode keyRight;
+	public string keyUp;
+	public string keyDown;
+	public string keyLeft;
+	public string keyRight;
 	
 	private Rigidbody2D rigidbody;
 	private BoxCollider2D PlayerCollider;
@@ -60,7 +60,7 @@ public class MovementScript : MonoBehaviour
 		if(!overlapPlatform)
 		{
 			ignoringPlatforms = false;
-			if(!Input.GetKey(keyDown))
+			if(!Input.GetButton(keyDown))
 			{
 				Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(PLATFORMLAYER), false);
 			}
@@ -82,32 +82,32 @@ public class MovementScript : MonoBehaviour
 			
 			rigidbody.velocity = new Vector2(0.0f, rigidbody.velocity.y);
 			
-			if(Input.GetKey(keyRight))
+			if(Input.GetButton(keyRight))
 			{
 				rigidbody.velocity = new Vector2(movementSpeed, rigidbody.velocity.y);
 				currentlyFacing = Direction.Right;
 			}
 			
-			if(Input.GetKey(keyLeft))
+			if(Input.GetButton(keyLeft))
 			{
 				rigidbody.velocity = new Vector2(-movementSpeed, rigidbody.velocity.y);
 				currentlyFacing = Direction.Left;
 			}
 			
-			if(Input.GetKeyDown(keyUp) && grounded)
+			if(Input.GetButtonDown(keyUp) && grounded)
 			{
 				rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpHeight);
 				animator.SetTrigger("Jump");
 			}
 			
-			if(Input.GetKeyDown(keyUp) && !grounded && !doublejumped && canDoublejump)
+			if(Input.GetButtonDown(keyUp) && !grounded && !doublejumped && canDoublejump)
 			{
 				rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpHeight);
 				doublejumped = true;
 				animator.SetTrigger("Jump");
 			}
 			
-			if(Input.GetKeyDown(keyDown))
+			if(Input.GetButtonDown(keyDown))
 			{
 				Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(PLATFORMLAYER));
 				ignoringPlatforms = true;

@@ -9,7 +9,7 @@ public class KnightAbilityControll : MonoBehaviour {
 	public float DefendTime;
 	public float AbilityReuseTime;
 	
-	public KeyCode Action1;
+	public string Action1;
 	
 	private Animator animator;
 	private WeaponControl weaponControl;
@@ -22,7 +22,7 @@ public class KnightAbilityControll : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKey(Action1) && weaponControl.Weapon != null)
+		if(Input.GetButton(Action1) && weaponControl.Weapon != null)
 		{
 			Defend();
 		}

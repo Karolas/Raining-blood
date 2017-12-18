@@ -15,8 +15,8 @@ public class WeaponControl : MonoBehaviour {
 	private Attack AttackScript;
 	private int Durability;
 	
-	public KeyCode KeyHit;
-	public KeyCode KeyAction2;
+	public string KeyHit;
+	public string KeyAction2;
 	
 	private Transform playerPos;
 	private MovementScript playerMov;
@@ -39,11 +39,11 @@ public class WeaponControl : MonoBehaviour {
 	void Update () {
 		if(isEnabled)
 		{
-			if(Input.GetKeyDown(KeyHit) && Weapon != null)
+			if(Input.GetButtonDown(KeyHit) && Weapon != null)
 			{
 				Attack();
 			}
-			if(colWeaponSpawn != null && colWeaponSpawn.gameObject.tag == "Gun" && CanUseGuns && Input.GetKeyDown(KeyAction2))
+			if(colWeaponSpawn != null && colWeaponSpawn.gameObject.tag == "Gun" && CanUseGuns && Input.GetButtonDown(KeyAction2))
 			{
 				Attack attackScriptTemp = colWeaponSpawn.gameObject.GetComponent<Attack>();
 				if(attackScriptTemp.available)
@@ -53,7 +53,7 @@ public class WeaponControl : MonoBehaviour {
 					Durability = AttackScript.Durability;
 				}
 			}
-			if(colWeaponSpawn != null && colWeaponSpawn.gameObject.tag == "Sword" && CanUseMeleeWeapons && Input.GetKeyDown(KeyAction2))
+			if(colWeaponSpawn != null && colWeaponSpawn.gameObject.tag == "Sword" && CanUseMeleeWeapons && Input.GetButtonDown(KeyAction2))
 			{
 				Attack attackScriptTemp = colWeaponSpawn.gameObject.GetComponent<Attack>();
 				if(attackScriptTemp.available)

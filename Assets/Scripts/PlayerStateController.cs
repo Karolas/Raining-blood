@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStateController : MonoBehaviour {
-	public enum PlayerClass {BasicGuy, Knight};
+	public enum PlayerClass {None, BasicGuy, Knight};
 
 	public PlayerClass playerClass;
 	
