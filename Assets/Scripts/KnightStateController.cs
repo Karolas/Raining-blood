@@ -14,6 +14,7 @@ public class KnightStateController : MonoBehaviour {
 	private SpriteRenderer playerSprite;
 	private Transform playerTransform;
 	private Animator animator;
+	private KnightAbilityControll knightAbility;
 	
 	void Start() {
 		deathParticles = GetComponent<ParticleSystem>();
@@ -22,10 +23,11 @@ public class KnightStateController : MonoBehaviour {
 		playerSprite = GetComponent<SpriteRenderer>();
 		playerTransform = GetComponent<Transform>();
 		animator = GetComponent<Animator>();
+		knightAbility = GetComponent<KnightAbilityControll>();
 	}
 	
 	public void KillPlayer() {
-		if(IsAlive) {
+		if(IsAlive && !knightAbility.IsDefending) {
 			if(IsArmorBroken)
 			{
 				deathParticles.Play();

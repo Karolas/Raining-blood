@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 198039793914832884}
   - component: {fileID: 199051997899178054}
   - component: {fileID: 114642036702569398}
+  - component: {fileID: 114134697819026828}
   m_Layer: 10
   m_Name: Knight 1
   m_TagString: Player
@@ -182,6 +183,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerClass: 1
   RespawnTime: 5
+--- !u!114 &114134697819026828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1417381760634714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf22b7e59b06ecf43ade261f478a7a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDefending: 0
+  IsOnCooldown: 0
+  DefendTime: 0.5
+  AbilityReuseTime: 1
+  Action1: 0
 --- !u!114 &114253082659965286
 MonoBehaviour:
   m_ObjectHideFlags: 1

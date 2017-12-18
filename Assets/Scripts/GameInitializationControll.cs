@@ -34,7 +34,11 @@ public class GameInitializationControll : MonoBehaviour {
 		if(playerClass == PlayerStateController.PlayerClass.BasicGuy)
 			player = Instantiate(BasicGuyObject, RandomSpawn(), Quaternion.Euler(0, 0, 0)) as GameObject;
 		if(playerClass == PlayerStateController.PlayerClass.Knight)
+		{
 			player = Instantiate(KnightObject, RandomSpawn(), Quaternion.Euler(0, 0, 0)) as GameObject;
+			player.GetComponent<KnightAbilityControll>().Action1 = keyAction1;
+			
+		}
 		
 		MovementScript playerMov = player.GetComponent<MovementScript>();
 		playerMov.keyUp = keyUp;
