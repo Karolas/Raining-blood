@@ -26,11 +26,12 @@ public class KnightStateController : MonoBehaviour {
 		knightAbility = GetComponent<KnightAbilityControll>();
 	}
 	
-	public void KillPlayer() {
+	public void KillPlayer(PlayerStateController killerState) {
 		if(IsAlive && !knightAbility.IsDefending) {
 			if(IsArmorBroken)
 			{
 				deathParticles.Play();
+				killerState.playerScore++;
 				IsAlive = false;
 				playerMov.isEnabled = false;
 				playerWeapon.isEnabled = false;

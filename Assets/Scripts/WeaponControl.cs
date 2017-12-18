@@ -102,11 +102,13 @@ public class WeaponControl : MonoBehaviour {
 			{
 				bullet = Instantiate(AttackScript.Bullet, playerPos.position + new Vector3(1.0f, 0.0f, 0.0f), Quaternion.Euler(0, 0, 0)) as GameObject;
 				bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+				bullet.GetComponent<BulletCollisionController>().owner = gameObject;
 			}
 			else
 			{
 				bullet = Instantiate(AttackScript.Bullet, playerPos.position + new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
 				bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-20, 0);
+				bullet.GetComponent<BulletCollisionController>().owner = gameObject;
 			}
 			
 			Durability--;
@@ -124,12 +126,12 @@ public class WeaponControl : MonoBehaviour {
 			foreach(Collider2D enemyCollider in collidingPlayers) {
 				if(playerMov.currentlyFacing == MovementScript.Direction.Left && enemyCollider.bounds.center.x < playerCol.bounds.center.x){
 					Debug.Log("Attack to left");
-					enemyCollider.gameObject.GetComponent<PlayerStateController>().KillPlayer();
+					enemyCollider.gameObject.GetComponent<PlayerStateController>().KillPlayer(playerState);
 					playerDamaged = true;
 				}
 				else if(playerMov.currentlyFacing == MovementScript.Direction.Right && enemyCollider.bounds.center.x > playerCol.bounds.center.x) {
 					Debug.Log("Attack to right");
-					enemyCollider.gameObject.GetComponent<PlayerStateController>().KillPlayer();
+					enemyCollider.gameObject.GetComponent<PlayerStateController>().KillPlayer(playerState);
 					playerDamaged = true;
 				}
 			}

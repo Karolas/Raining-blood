@@ -16,14 +16,14 @@ public class GameInitializationControll : MonoBehaviour {
 		{
 			InitializePlayer("Player1 up", "Player1 down", "Player1 left", "Player1 right",
 						 "Player1 hit", "Player1 action1", "Player1 action2",
-						 LayerMask.NameToLayer("Player1"), GameOptions.player1);
+						 "Player1", GameOptions.player1);
 		}
 		
 		if(GameOptions.player2 != PlayerStateController.PlayerClass.None)
 		{
 			InitializePlayer("Player2 up", "Player2 down", "Player2 left", "Player2 right",
 						 "Player2 hit", "Player2 action1", "Player2 action2",
-						 LayerMask.NameToLayer("Player2"), GameOptions.player2);
+						 "Player2", GameOptions.player2);
 		}
 						 
 		//InitializePlayer(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow,
@@ -33,7 +33,7 @@ public class GameInitializationControll : MonoBehaviour {
 	
 	void InitializePlayer(string keyUp, string keyDown, string keyLeft, string keyRight,
 							string keyHit, string keyAction1, string keyAction2,
-							int playerLayer, PlayerStateController.PlayerClass playerClass)
+							string playerLayerName, PlayerStateController.PlayerClass playerClass)
 	{
 		GameObject player = null; 
 		
@@ -56,7 +56,9 @@ public class GameInitializationControll : MonoBehaviour {
 		playerWeapon.KeyHit = keyHit;
 		playerWeapon.KeyAction2 = keyAction2;
 		
-		player.layer = playerLayer;
+		player.layer = LayerMask.NameToLayer(playerLayerName);
+		
+		GameObject.Find(playerLayerName + "Score").GetComponent<ScoreController>().player = player;
 	}
 	
 	Vector3 RandomSpawn()

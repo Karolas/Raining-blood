@@ -20,10 +20,11 @@ public class BasicGuyStateController : MonoBehaviour {
 		playerTransform = GetComponent<Transform>();
 	}
 	
-	public void KillPlayer() {
+	public void KillPlayer(PlayerStateController killerState) {
 		if(IsAlive) {
 			deathParticles.Play();
 			IsAlive = false;
+			killerState.playerScore++;
 			playerMov.isEnabled = false;
 			playerWeapon.isEnabled = false;
 			playerSprite.enabled = false;

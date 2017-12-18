@@ -6,6 +6,7 @@ public class PlayerStateController : MonoBehaviour {
 	public enum PlayerClass {None, BasicGuy, Knight};
 
 	public PlayerClass playerClass;
+	public int playerScore = 0;
 	
 	public bool IsAlive
 	{
@@ -58,12 +59,12 @@ public class PlayerStateController : MonoBehaviour {
 		}
 	}
 	
-	public void KillPlayer() {
+	public void KillPlayer(PlayerStateController killerState) {
 		if(playerClass == PlayerClass.Knight) {
-			knightController.KillPlayer();
+			knightController.KillPlayer(killerState);
 		}
 		if(playerClass == PlayerClass.BasicGuy) {
-			basicGuyController.KillPlayer();
+			basicGuyController.KillPlayer(killerState);
 		}
 	}
 }

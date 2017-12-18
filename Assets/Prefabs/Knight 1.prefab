@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerClass: 2
+  playerScore: 0
   RespawnTime: 5
 --- !u!114 &114134697819026828
 MonoBehaviour:
@@ -196,7 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDefending: 0
   IsOnCooldown: 0
-  DefendTime: 0.5
+  DefendTime: 1
   AbilityReuseTime: 1
   Action1: 0
 --- !u!114 &114253082659965286

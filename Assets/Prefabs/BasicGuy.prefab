@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287a0831a21a8794582db5876cb5133e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerClass: 0
+  playerClass: 1
   RespawnTime: 5
 --- !u!114 &114322666121376452
 MonoBehaviour:
@@ -210,8 +210,8 @@ MonoBehaviour:
   CanUseGuns: 1
   CanUseMeleeWeapons: 1
   Weapon: {fileID: 0}
-  KeyHit: 256
-  KeyAction2: 259
+  KeyHit: 
+  KeyAction2: 
 --- !u!114 &114670511461254716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -236,10 +236,10 @@ MonoBehaviour:
   whatIsPlatform:
     serializedVersion: 2
     m_Bits: 8192
-  keyUp: 273
-  keyDown: 274
-  keyLeft: 276
-  keyRight: 275
+  keyUp: 
+  keyDown: 
+  keyLeft: 
+  keyRight: 
   currentlyFacing: 0
 --- !u!198 &198363760217018560
 ParticleSystem:
