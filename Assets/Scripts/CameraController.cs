@@ -49,14 +49,11 @@ public class CameraController : MonoBehaviour {
 		cameraTransform.position = middlePoint;
 		
 		float cameraSizeY = (maxY - minY) / 2 + 2;
-		float cameraSizeX = (maxX - minX) / camera.aspect;
+		float cameraSizeX = (maxX - minX) / (camera.aspect * 2) + 2;
 		Debug.Log("aspect:" + camera.aspect);
 		
-		if((cameraSizeY > 5.0f || cameraSizeX > 5.0f) && cameraSizeY < arenaSize && cameraSizeX < arenaSize) {
+		if(cameraSizeY > 5.0f || cameraSizeX > 5.0f) {
 			camera.orthographicSize = Mathf.Max(cameraSizeY, cameraSizeX);
-		}
-		else if(cameraSizeY > arenaSize || cameraSizeX > arenaSize) {
-			camera.orthographicSize = arenaSize;
 		}
 		else{
 			camera.orthographicSize = 5.0f;

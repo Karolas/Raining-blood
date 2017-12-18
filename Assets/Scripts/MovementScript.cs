@@ -16,6 +16,7 @@ public class MovementScript : MonoBehaviour
 	private bool doublejumped;
 	
 	public Transform groundCheck;
+	public Transform groundCheck2;
 	public float groundCheckRadius;
 	public LayerMask whatIsGround;
 	public LayerMask whatIsPlatform;
@@ -44,11 +45,13 @@ public class MovementScript : MonoBehaviour
 	
 	void FixedUpdate()
 	{
-		bool groundedFloor = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+		bool groundedFloor = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround) |
+							 Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, whatIsGround);
 		bool groundedPlatform = false;
 		if(!ignoringPlatforms)
 		{
-			groundedPlatform = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsPlatform);
+			groundedPlatform = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsPlatform) |
+							   Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, whatIsPlatform);
 		}
 		grounded = groundedFloor | groundedPlatform;
 		
